@@ -1,3 +1,12 @@
+#####メインフォーム設定
+母艦の幅は615
+母艦の高さは670
+ウィンドウ背景色で画面クリア
+母艦のタイトルは「意識低めのスレタイ一覧ツール for Reddit」
+文字書体は「Meiryo UI」
+文字サイズは9
+経過ダイアログはオフ
+
 #枠固定にする事でスクロールバーをなくしつつ、WinAPIから無理やりウインドウサイズの変更をサポート
 #こうすることでグリッドのサイズ変更がうまくいかないなでしこの仕様を(見た目上)回避しつつメインウインドウに横スクロールバーが発生するダサい状況を回避
 #参考　http://nade.jp-pro.net/bbs/bbs3/cbbs.cgi?mode=al2&number=2820&no=0&KLOG=5
@@ -6,15 +15,16 @@
 !WS_SIZEBOX=$40000
 SetWindowLong(母艦のハンドル,GWL_STYLE,GetWindowLong(母艦のハンドル,GWL_STYLE)||WS_SIZEBOX)
 
-HTTPオプションは「UA=」&「Windows:Reddit assist tool for 2ch-users v1.10 (by /u/nuta_unagi)」
-母艦の幅は615
-母艦の高さは670
-ウィンドウ背景色で画面クリア
-母艦のタイトルは「Redditスレタイ一覧ツール」
-文字書体は「Meiryo UI」
-文字サイズは9
-板リストに「板一覧.txt」を開く
+#####UA設定
+HTTPオプションは「UA=」&「Windows:ISHIKIHIKUI Submission Titles Reader v1.11 (by /u/nuta_unagi)」
 
+#####コンフィグ読み込み
+「config.ini」のINI開いてコンフィグに代入
+コンフィグで「ブラウザ」の「PATH」をINI読んでブラパスに代入
+コンフィグで「板一覧」の「PATH」をINI読んで板一覧パスに代入
+板リストに「{板一覧パス}」を開く
+
+#####部品設定
 APIタイマーとはタイマー
 その間隔は2
 その時満ちた時は
@@ -96,7 +106,6 @@ TOPボタンについて
 	板数＝回数
 	「{対象}スレタイ一覧をダブルクリックした時は
 		URL処理」をナデシコする
-
 ######################動的生成祭り######################
 
 板タブに「検索」をタブ追加
@@ -136,40 +145,15 @@ TOPボタンについて
 		ボタンオン処理
 		0秒待つ
 HOTボタンをクリックした時は
-	APIタイマーを開始
-	ボタンオフ処理
-	0秒待つ
-	JSON＝「http://www.reddit.com/r/{板タブのテキスト}/hot/.json?limit=100」をHTTPデータ取得
-	hotraw＝JSONをJSONデコード
-	「{板タブのテキスト}URLLIST＝hotrawを板タブのテキストでリスト処理」をナデシコする
+	hotでAPI取得処理
 NEWボタンをクリックした時は
-	APIタイマーを開始
-	ボタンオフ処理
-	0秒待つ
-	JSON＝「http://www.reddit.com/r/{板タブのテキスト}/new/.json?limit=100」をHTTPデータ取得
-	newraw＝JSONをJSONデコード
-	「{板タブのテキスト}URLLIST＝newrawを板タブのテキストでリスト処理」をナデシコする
+	newでAPI取得処理
 RISINGボタンをクリックした時は
-	APIタイマーを開始
-	ボタンオフ処理
-	0秒待つ
-	JSON＝「http://www.reddit.com/r/{板タブのテキスト}/rising/.json?limit=100」をHTTPデータ取得
-	riseraw＝JSONをJSONデコード
-	「{板タブのテキスト}URLLIST＝riserawを板タブのテキストでリスト処理」をナデシコする
+	risingでAPI取得処理
 CONTROVERSIALボタンをクリックした時は
-	APIタイマーを開始
-	ボタンオフ処理
-	0秒待つ
-	JSON＝「http://www.reddit.com/r/{板タブのテキスト}/controversial/.json?limit=100」をHTTPデータ取得
-	contraw＝JSONをJSONデコード
-	「{板タブのテキスト}URLLIST＝contrawを板タブのテキストでリスト処理」をナデシコする
+	controversialでAPI取得処理
 TOPボタンをクリックした時は
-	APIタイマーを開始
-	ボタンオフ処理
-	0秒待つ
-	JSON＝「http://www.reddit.com/r/{板タブのテキスト}/top/.json?limit=100」をHTTPデータ取得
-	topraw=JSONをJSONデコード
-	「{板タブのテキスト}URLLIST＝toprawを板タブのテキストでリスト処理」をナデシコする
+	topでAPI取得処理
 
 検索ボタンをクリックした時は
 	ボタンオフ処理
@@ -179,7 +163,7 @@ TOPボタンをクリックした時は
 検索スレタイ一覧をダブルクリックした時は
 	検索URL処理
 	
-################検索用フォーム#####################
+#####検索用フォーム
 検索用フォームとはフォーム
 その幅は346
 その高さは170
@@ -256,9 +240,8 @@ google(気づいたら検索API有料化してた・・・)
 検索ラジオをクリックした時は
 	
 検索ラベルをクリックした時は
-################検索用フォームここまで#####################	
 
-#####各種ユーザー変数
+#####各種ユーザー設定関数
 ●SetWindowLong(h,i,l) =DLL("user32.dll","long SetWindowLongA(hwnd hWnd,int nIndex,long dwNewLong)")
 ●GetWindowLong(h,i) = DLL("user32.dll","LONG GetWindowLongA(HWND hWnd,int nIndex)")
 
@@ -278,6 +261,14 @@ google(気づいたら検索API有料化してた・・・)
 	TOPボタンの有効はオフ
 	検索ボタンの有効はオフ
 
+●API取得処理(対象文字列で)
+	APIタイマーを開始
+	ボタンオフ処理
+	0秒待つ
+	JSON＝「http://www.reddit.com/r/{板タブのテキスト}/{対象文字列}/.json?limit=100」をHTTPデータ取得
+	raw＝JSONをJSONデコード
+	「{板タブのテキスト}URLLIST＝rawを板タブのテキストでリスト処理」をナデシコする
+
 ●URL処理
 	「ct＝『{板タブのテキスト}スレタイ一覧の行』」をナデシコする
 	CLICK＝「」
@@ -285,7 +276,7 @@ google(気づいたら検索API有料化してた・・・)
 	UL＝「」
 	「UL＝{板タブのテキスト}URLLIST￥{CLICK}」をナデシコする
 	もしULが空なら、抜ける
-	「http://www.reddit.com{UL}」を起動する。
+	「{ブラパス} http://www.reddit.com{UL}」を起動する。
 	
 ●検索URL処理
 	「ct＝『検索スレタイ一覧の行』」をナデシコする
@@ -294,7 +285,7 @@ google(気づいたら検索API有料化してた・・・)
 	UL＝「」
 	「UL＝{板タブのテキスト}URLLIST￥{CLICK}」をナデシコする
 	もしULが空なら、抜ける
-	「http://www.reddit.com{UL}」を起動する。
+	「{ブラパス} http://www.reddit.com{UL}」を起動する。
 
 ●リスト処理（対象文字列を,ITAで）
 	tmp＝「」
@@ -372,5 +363,4 @@ google(気づいたら検索API有料化してた・・・)
 				対象をresultスレタイに一行追加
 				tmpurl￥(回数-2)をulistに一行追加
 	検索スレタイ一覧のアイテムはresultスレタイ
-//	検索スレタイ一覧のセルサイズ自動調節
 	ulistで戻る
