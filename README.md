@@ -17,7 +17,8 @@
 動作確認環境：Windows 7(x64) なでしこ1.549
 
 
-ライセンス：MIT
+ライセンス：MIT 
+This software is released under the MIT License, see LICENSE.txt.
 
 # インストール方法
 
