@@ -1,400 +1,468 @@
-Ver���uv1.13�v
-#####���C���t�H�[���ݒ�
-�E�B���h�E�w�i�F�ŉ�ʃN���A
-��͂̃^�C�g���́u�ӎ���߂̃X���^�C�ꗗ�c�[�� for Reddit�v
-�������̂́uMeiryo UI�v
-�����T�C�Y��9
-�o�߃_�C�A���O�̓I�t
+Ver＝「v1.20」
+#####メインフォーム設定
+ウィンドウ背景色で画面クリア
+母艦のタイトルは「意識低めのスレタイ一覧ツール for Reddit」
+文字書体は「Meiryo UI」
+文字サイズは9
+経過ダイアログはオフ
 
-#�g�Œ�ɂ��鎖�ŃX�N���[���o�[���Ȃ����AWinAPI���疳�����E�C���h�E�T�C�Y�̕ύX���T�|�[�g
-#�������邱�ƂŃO���b�h�̃T�C�Y�ύX�����܂������Ȃ��Ȃł����̎d�l��(�����ڏ�)��������C���E�C���h�E�ɉ��X�N���[���o�[����������_�T���󋵂����
-#�Q�l�@http://nade.jp-pro.net/bbs/bbs3/cbbs.cgi?mode=al2&number=2820&no=0&KLOG=5
-��͂̃X�^�C���́u�g�Œ�v
+#枠固定にする事でスクロールバーをなくしつつ、WinAPIから無理やりウインドウサイズの変更をサポート
+#こうすることでグリッドのサイズ変更がうまくいかないなでしこの仕様を(見た目上)回避しつつメインウインドウに横スクロールバーが発生するダサい状況を回避
+#参考　http://nade.jp-pro.net/bbs/bbs3/cbbs.cgi?mode=al2&number=2820&no=0&KLOG=5
+母艦のスタイルは「枠固定」
 !GWL_STYLE=-16
 !WS_SIZEBOX=$40000
-SetWindowLong(��͂̃n���h��,GWL_STYLE,GetWindowLong(��͂̃n���h��,GWL_STYLE)||WS_SIZEBOX)
+SetWindowLong(母艦のハンドル,GWL_STYLE,GetWindowLong(母艦のハンドル,GWL_STYLE)||WS_SIZEBOX)
 
-��͂̏I���\�̓I�t
-��͂̕�������
-	�R���t�B�O�Łu�E�C���h�E�T�C�Y�v�́u���v�ɕ�͂̕���INI����
-	�R���t�B�O�Łu�E�C���h�E�T�C�Y�v�́u���v�ɕ�͂̍�����INI����
-	��͂̏I���\�̓I��
-	�I��
+母艦の終了可能はオフ
+母艦の閉じた時は
+	コンフィグで「ウインドウサイズ」の「幅」に母艦の幅をINI書く
+	コンフィグで「ウインドウサイズ」の「高」に母艦の高さをINI書く
+	母艦の終了可能はオン
+	終了
 
-#####UA�ݒ�
-HTTP�I�v�V�����́uUA=�v&�uWindows:ISHIKIHIKUI Submission Titles Reader {Ver} (by /u/nuta_unagi)�v
+#####UA設定
+HTTPオプションは「UA=」&「Windows:ISHIKIHIKUI Submission Titles Reader {Ver} (by /u/nuta_unagi)」
 
-#####�R���t�B�O�ǂݍ���
-�uconfig.ini�v��INI�J���ăR���t�B�O�ɑ��
-�R���t�B�O�Łu�E�C���h�E�T�C�Y�v�́u���v��INI�ǂ�ŕ�͂̕��ɑ��
-�R���t�B�O�Łu�E�C���h�E�T�C�Y�v�́u���v��INI�ǂ�ŕ�͂̍����ɑ��
-�R���t�B�O�Łu�u���E�U�v�́uPATH�v��INI�ǂ�Ńu���p�X�ɑ��
-�R���t�B�O�Łu�ꗗ�v�́uPATH�v��INI�ǂ�Ŕꗗ�p�X�ɑ��
-���X�g�Ɂu{�ꗗ�p�X}�v���J��
+#####コンフィグ読み込み
+「config.ini」のINI開いてコンフィグに代入
+コンフィグで「ウインドウサイズ」の「幅」をINI読んで母艦の幅に代入
+コンフィグで「ウインドウサイズ」の「高」をINI読んで母艦の高さに代入
+コンフィグで「ブラウザ」の「PATH」をINI読んでブラパスに代入
+コンフィグで「板一覧」の「PATH」をINI読んで板一覧パスに代入
+板リストに「{板一覧パス}」を開く
+//favlistに「fav.conf」を開く
 
-#####���i�ݒ�
-API�^�C�}�[�Ƃ̓^�C�}�[
-���̊Ԋu��2
-���̎�����������
-	�{�^���I������
+#####部品設定
+APIタイマーとはタイマー
+その間隔は2
+その時満ちた時は
+	ボタンオン処理
 	
-�^�u�Ƃ̓^�u�y�[�W
-�^�u�ɂ���
+板タブとはタブページ
+板タブについて
     X=2
     Y=2
-���̃^�u���i���̓I��
+そのタブ多段化はオン
 
-HOT�{�^���Ƃ̓{�^��
-HOT�{�^���ɂ���
+HOTボタンとはボタン
+HOTボタンについて
     X=2
     Y=955
     W=95
     H=36
-    �����T�C�Y�́A20�B
-    �e�L�X�g�́A�u���ځv�B
+    文字サイズは、20。
+    テキストは、「注目」。
 
-NEW�{�^���Ƃ̓{�^��
-NEW�{�^���ɂ���
+NEWボタンとはボタン
+NEWボタンについて
     X=100
     Y=955
     W=95
     H=36
-    �����T�C�Y�́A20�B
-    �e�L�X�g�́A�u�V���v�B
+    文字サイズは、20。
+    テキストは、「新着」。
 
-RISING�{�^���Ƃ̓{�^��
-RISING�{�^���ɂ���
+RISINGボタンとはボタン
+RISINGボタンについて
     X=198
     Y=955
     W=95
     H=36
-    �����T�C�Y�́A20�B
-    �e�L�X�g�́A�u�㏸�x�v�B
+    文字サイズは、20。
+    テキストは、「上昇度」。
 
-CONTROVERSIAL�{�^���Ƃ̓{�^��
-CONTROVERSIAL�{�^���ɂ���
+CONTROVERSIALボタンとはボタン
+CONTROVERSIALボタンについて
     X=296
     Y=955
     W=95
     H=36
-    �����T�C�Y�́A20�B
-    �e�L�X�g�́A�u�_�����v�B
+    文字サイズは、20。
+    テキストは、「論争中」。
 
-TOP�{�^���Ƃ̓{�^��
-TOP�{�^���ɂ���
+TOPボタンとはボタン
+TOPボタンについて
     X=394
     Y=955
     W=95
     H=35
-    �����T�C�Y�́A20�B
-    �e�L�X�g�́A�u�g�b�v�v�B
+    文字サイズは、20。
+    テキストは、「トップ」。
     
-�����{�^���Ƃ̓{�^��
-�����{�^���ɂ���
+検索ボタンとはボタン
+検索ボタンについて
     X=492
     Y=955
     W=95
     H=35
-    �����T�C�Y�́A20�B
-    �e�L�X�g�́A�u�����v�B
+    文字サイズは、20。
+    テキストは、「検索」。
     
-�ʒm�Ƃ̓X�e�[�^�X�o�[
-�ʒm�ɂ���
-	���C�A�E�g�́u���v
-	�e�L�X�g�́u�ӎ���߂̃X���^�C�ꗗ�c�[�� for Reddit�@{Ver}�v
+通知とはステータスバー
+通知について
+	レイアウトは「下」
+	テキストは「意識低めのスレタイ一覧ツール for Reddit　{Ver}」
 
-#�E�N���b�N���j���[�����Ɍ�����������
-//�X�����j���[�Ƃ̓|�b�v�A�b�v���j���[
-//�X�����j���[�ɂ���
-//	�u,�X��URL,�X���b�h���J��,,,URL�����v���ꊇ�ǉ�?�B 
+#右クリックメニュー実装に向けた実験中
+スレメニューとはポップアップメニュー
+スレメニューについて
+	「,スレ開く,スレッドを開く,,,URL処理
+	,ソース開く,ソースを開く,,,ソースURL処理
+	,スレURLコピー,スレッドURLをコピー,,,URLコピー処理
+	,スレタイURLコピー,スレタイとURLをコピー,,,URLスレタイコピー処理」を一括追加。 
+//	,ブックマーク,ブックマーク追加,,,ブックマーク処理
 
-######################���I�����Ղ�######################
-���X�g�𔽕�
-	�u�^�u�Ɂw{�Ώ�}�x���^�u�ǉ��v���i�f�V�R����
-	�u{�Ώ�}�X���^�C�ꗗ�Ƃ̓O���b�h�B{�Ώ�}�X���^�C�ꗗ�ɂ���
+######################動的生成祭り######################
+板リストを反復
+	「板タブに『{対象}』をタブ追加」をナデシコする
+	「{対象}スレタイ一覧とはグリッド。{対象}スレタイ一覧について
     X=0
     Y=0
-    ���C�A�E�g�́A�w�S�́x�B
-    �A�C�e���́A�w�ԍ�,���X,��,�t���A,�X���^�C�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�x�B
-    �w�i�F�́A���F�B
-//    �|�b�v�A�b�v���j���[�̓X�����j���[
-	�v���i�f�V�R����
-	�^�u�̕\���^�u��(��-1)
-	�u{�Ώ�}�X���^�C�ꗗ�̐e���i�́A�^�u�v���i�f�V�R����
-	�u{�^�u�̃e�L�X�g}URLLIST���w�x�v���i�f�V�R����
-	������
-	�u{�Ώ�}�X���^�C�ꗗ���_�u���N���b�N��������
-		URL�����v���i�f�V�R����
-	�u{�^�u�̃e�L�X�g}�X���^�C�ꗗ�̃}�E�X����������
-		����{�^�u�̃e�L�X�g}�X���^�C�ꗗ�̉����ꂽ�{�^�����w�E�x�Ȃ��
-			�}�E�X�N���b�N�v���i�f�V�R����
-######################���I�����Ղ�######################
+    レイアウトは、『全体』。
+    アイテムは、『番号,レス,↑,フレア,スレタイ　　　　　　　　　　　　　　　　　　　　　　　　　　』。
+    背景色は、白色。
+    ポップアップメニューはスレメニュー
+	」をナデシコする
+	板タブの表示タブは(回数-1)
+	「{対象}スレタイ一覧の親部品は、板タブ」をナデシコする
+	「{板タブのテキスト}URLLIST＝『』」をナデシコする
+	板数＝回数
+	「{対象}スレタイ一覧をダブルクリックした時は
+		URL処理」をナデシコする
+	「{板タブのテキスト}スレタイ一覧のマウス押した時は
+		もし{板タブのテキスト}スレタイ一覧の押されたボタンが『右』ならば
+			マウスクリック」をナデシコする
+		
+######################動的生成祭り######################
 
-�^�u�Ɂu�����v���^�u�ǉ�
-�^�u�̕\���^�u�͔�
-�u{�^�u�̃e�L�X�g}URLLIST���w�x�v���i�f�V�R����
-�����X���^�C�ꗗ�Ƃ̓O���b�h�B�����X���^�C�ꗗ�ɂ���
+//板タブに「ブックマーク」をタブ追加
+//板タブの表示タブは板数
+//「{板タブのテキスト}URLLIST＝『』」をナデシコする
+//ブックマークスレタイ一覧とはグリッド。ブックマークスレタイ一覧について
+//    X=0
+//    Y=0
+//    W=832
+//    H=924
+//    レイアウトは、「全体」。
+//    アイテムはfavlist。
+//    背景色は、白色。
+//    ポップアップメニューはスレメニュー
+//ブックマークスレタイ一覧の親部品は、板タブ
+//「{板タブのテキスト}スレタイ一覧のマウス押した時は
+//	もし{板タブのテキスト}スレタイ一覧の押されたボタンが『右』ならば
+//		マウスクリック」をナデシコする
+
+板タブに「検索」をタブ追加
+板タブの表示タブは板数
+「{板タブのテキスト}URLLIST＝『』」をナデシコする
+検索スレタイ一覧とはグリッド。検索スレタイ一覧について
     X=0
     Y=0
     W=832
     H=924
-    ���C�A�E�g�́A�u�S�́v�B
-    �A�C�e���́A�w�ԍ�,���X,��,�t���A,�X���^�C�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�x�B
-    �w�i�F�́A���F�B
-//    �|�b�v�A�b�v���j���[�̓X�����j���[
-�����X���^�C�ꗗ�̐e���i�́A�^�u
-�u{�^�u�̃e�L�X�g}�X���^�C�ꗗ�̃}�E�X����������
-	����{�^�u�̃e�L�X�g}�X���^�C�ꗗ�̉����ꂽ�{�^�����w�E�x�Ȃ��
-		�}�E�X�N���b�N�v���i�f�V�R����
+    レイアウトは、「全体」。
+    アイテムは、『番号,レス,↑,フレア,スレタイ　　　　　　　　　　　　　　　　　　　　　　　　　　』。
+    背景色は、白色。
+    ポップアップメニューはスレメニュー
+検索スレタイ一覧の親部品は、板タブ
+「{板タブのテキスト}スレタイ一覧のマウス押した時は
+	もし{板タブのテキスト}スレタイ一覧の押されたボタンが『右』ならば
+		マウスクリック」をナデシコする
 
-�^�u�̕\���^�u��0
+板タブの表示タブは0
 
-��͂̃T�C�Y�ύX�������́`
-	CONTROVERSIAL�{�^����Y��((��͂̍���-32)-�i660-595))
-	TOP�{�^����Y��((��͂̍���-32)-�i660-595))
-	HOT�{�^����Y��((��͂̍���-32)-�i660-595))
-	NEW�{�^����Y��((��͂̍���-32)-�i660-595))
-	RISING�{�^����Y��((��͂̍���-32)-�i660-595))
-	�����{�^����Y��((��͂̍���-32)-�i660-595))
-	�^�u�̍�����((��͂̍���-32)-�i660-592))
-	#�^�u�𖳗����E�C���h�E����͂ݏo�����鎖�ŃO���b�h�̕s��𖳗�������B�`���̃e�N�Ƃ̍��킹�Z
-	#�N�W����s�����񑁂��O���b�h�̃X�^�C�������܂Ƃ��ɏo����悤�ɂ��āE�E�E
-	�^�u�̕���(��͂̕�+1000)
-	�u{�^�u�̃e�L�X�g}�X���^�C�ꗗ�̃Z���T�C�Y�������߁v���i�f�V�R����
-	�^�u�̕���(��͂̕�-20)
-	��͍ĕ`��
+母艦のサイズ変更した時は～
+	CONTROVERSIALボタンのYは((母艦の高さ-32)-（660-595))
+	TOPボタンのYは((母艦の高さ-32)-（660-595))
+	HOTボタンのYは((母艦の高さ-32)-（660-595))
+	NEWボタンのYは((母艦の高さ-32)-（660-595))
+	RISINGボタンのYは((母艦の高さ-32)-（660-595))
+	検索ボタンのYは((母艦の高さ-32)-（660-595))
+	板タブの高さは((母艦の高さ-32)-（660-592))
+	#板タブを無理やりウインドウからはみ出させる事でグリッドの不具合を無理やり回避。冒頭のテクとの合わせ技
+	#クジラ飛行机さん早くグリッドのスタイル調整まともに出来るようにして・・・
+	板タブの幅は(母艦の幅+1000)
+	「{板タブのテキスト}スレタイ一覧のセルサイズ自動調節」をナデシコする
+	板タブの幅は(母艦の幅-20)
+	母艦再描画
 
-�^�u��ύX��������
-	�����A�^�u�̃e�L�X�g���u�����v�Ȃ�΁A
-		�{�^���I�t����
-		API�^�C�}�[���~
-		0�b�҂�
-	�Ⴆ��
-		�{�^���I������
-		0�b�҂�
-HOT�{�^�����N���b�N��������
-	hot��API�擾����
-NEW�{�^�����N���b�N��������
-	new��API�擾����
-RISING�{�^�����N���b�N��������
-	rising��API�擾����
-CONTROVERSIAL�{�^�����N���b�N��������
-	controversial��API�擾����
-TOP�{�^�����N���b�N��������
-	top��API�擾����
+板タブを変更した時は
+	もし、板タブのテキストが「検索」ならば、
+		ボタンオフ処理
+		APIタイマーを停止
+		0秒待つ
+//	違えば、もし、板タブのテキストが「ブックマーク」ならば、
+//		ボタンオフ処理
+//		APIタイマーを停止
+//		0秒待つ
+	違えば
+		ボタンオン処理
+		0秒待つ
+HOTボタンをクリックした時は
+	hotでAPI取得処理
+NEWボタンをクリックした時は
+	newでAPI取得処理
+RISINGボタンをクリックした時は
+	risingでAPI取得処理
+CONTROVERSIALボタンをクリックした時は
+	controversialでAPI取得処理
+TOPボタンをクリックした時は
+	topでAPI取得処理
 
-�����{�^�����N���b�N��������
-	�{�^���I�t����
-	API�^�C�}�[���~
-	�����p�t�H�[���̉��̓I��
+検索ボタンをクリックした時は
+	ボタンオフ処理
+	APIタイマーを停止
+	検索用フォームの可視はオン
 
-�����X���^�C�ꗗ���_�u���N���b�N��������
-	URL����
+検索スレタイ一覧をダブルクリックした時は
+	URL処理
 	
-#####�����p�t�H�[��
-�����p�t�H�[���Ƃ̓t�H�[��
-���̕���346
-���̍�����170
-���̉��̓I�t
-�����̔w�i�F�̓E�B���h�E�w�i�F
-�������̂́uMeiryo UI�v
-�����T�C�Y��9
-�����p�t�H�[���̃^�C�g���́u�����v
+#####検索用フォーム
+検索用フォームとはフォーム
+その幅は346
+その高さは170
+その可視はオフ
+検索の背景色はウィンドウ背景色
+文字書体は「Meiryo UI」
+文字サイズは9
+検索用フォームのタイトルは「検索」
 
-�����G�f�B�^�Ƃ̓G�f�B�^
-�����G�f�B�^�ɂ���
+検索エディタとはエディタ
+検索エディタについて
     X=8
     Y=29
     W=236
     H=20
-    �e���i�͌����p�t�H�[��
-    �����T�C�Y�́A8�B
-    �e�L�X�g�́A�u�v�B
-    �w�i�F�́A���F�B
+    親部品は検索用フォーム
+    文字サイズは、8。
+    テキストは、「」。
+    背景色は、白色。
 
-�����J�n�{�^���Ƃ̓{�^��
-�����J�n�{�^���ɂ���
+検索開始ボタンとはボタン
+検索開始ボタンについて
     X=254
     Y=26
     W=74
     H=26
-    �e���i�͌����p�t�H�[��
-    �����T�C�Y�́A15�B
-    �e�L�X�g�́A�u�����v�B
+    親部品は検索用フォーム
+    文字サイズは、15。
+    テキストは、「検索」。
 
-�������W�I�Ƃ̓��W�I
-�������W�I�ɂ���
+検索ラジオとはラジオ
+検索ラジオについて
     X=8
     Y=59
     W=320
     H=65
-    �e���i�͌����p�t�H�[��
-    �e�L�X�g�́u������I���v
-    �A�C�e���́A�w�X���b�h�ꗗ
-reddit�{��
-�X���^�C����(�T�[�o�[�\�z�\��)
-google(�C�Â����猟��API�L�������Ă��E�E�E)
-�x�B
-	�l��0
-	�L���̓I�t
+    親部品は検索用フォーム
+    テキストは「検索先選択」
+    アイテムは、『スレッド一覧
+reddit本体
+スレタイ検索(サーバー構築予定)
+google(気づいたら検索API有料化してた・・・)
+』。
+	値は0
+	有効はオフ
 
-�������x���Ƃ̓��x��
-�������x���ɂ���
+検索ラベルとはラベル
+検索ラベルについて
     X=14
     Y=5
     W=117
     H=11
-    �e���i�͌����p�t�H�[��
-    �����T�C�Y�́A8�B
-    �����F�́A0�B
-    �e�L�X�g�́A�u�������[�h�����Ă��������v�B
-    �w�i�F�́A15790320�B
+    親部品は検索用フォーム
+    文字サイズは、8。
+    文字色は、0。
+    テキストは、「検索ワードを入れてください」。
+    背景色は、15790320。
 
-�����p�t�H�[���̃T�C�Y�ύX�������́`
+検索用フォームのサイズ変更した時は～
 
-�����G�f�B�^���N���b�N��������
+検索エディタをクリックした時は
 	
-�����J�n�{�^�����N���b�N��������
-	�����A�^�u�̃e�L�X�g���u�����v�Ȃ�΁A
-		�u�i���݌����͌��݃T�|�[�g����Ă��܂���v�ƌ����B
-		������
-	�����A�������W�I�̒l��0�Ȃ�΁A
-		����URLLIST�������G�f�B�^�̃e�L�X�g��^�u�̃e�L�X�g�ŃX���^�C�ꗗ��������
-	�^�u�̕\���^�u�͔�
-	�{�^���I�t����
-	�����p�t�H�[���̉��̓I�t
-	�{�^���I�t����
+検索開始ボタンをクリックした時は
+//	もし、板タブのテキストが「検索」ならば、
+//		「絞込み検索は現在サポートされていません」と言う。
+//		抜ける
+	もし、検索ラジオの値が0ならば、
+		検索URLLIST＝検索エディタのテキストを板タブのテキストでスレタイ一覧検索処理
+	板タブの表示タブは板数
+	ボタンオフ処理
+	検索用フォームの可視はオフ
+	ボタンオフ処理
 	
-�������W�I���N���b�N��������
+検索ラジオをクリックした時は
 	
-�������x�����N���b�N��������
+検索ラベルをクリックした時は
 
-��͂̉��̓I��
+母艦の可視はオン
 
-#####�e�탆�[�U�[�ݒ�֐�
-����͐݌v
-	��͂̉��̓I�t
+#####各種ユーザー設定関数
+●母艦設計
+	母艦の可視はオフ
 
-��SetWindowLong(h,i,l) =DLL("user32.dll","long SetWindowLongA(hwnd hWnd,int nIndex,long dwNewLong)")
-��GetWindowLong(h,i) = DLL("user32.dll","LONG GetWindowLongA(HWND hWnd,int nIndex)")
+●SetWindowLong(h,i,l) =DLL("user32.dll","long SetWindowLongA(hwnd hWnd,int nIndex,long dwNewLong)")
+●GetWindowLong(h,i) = DLL("user32.dll","LONG GetWindowLongA(HWND hWnd,int nIndex)")
 
-���{�^���I������
-	HOT�{�^���̗L���̓I��
-	NEW�{�^���̗L���̓I��
-	RISING�{�^���̗L���̓I��
-	CONTROVERSIAL�{�^���̗L���̓I��
-	TOP�{�^���̗L���̓I��
-	�����{�^���̗L���̓I��
+●ボタンオン処理
+	HOTボタンの有効はオン
+	NEWボタンの有効はオン
+	RISINGボタンの有効はオン
+	CONTROVERSIALボタンの有効はオン
+	TOPボタンの有効はオン
+//	検索ボタンの有効はオン
 
-���{�^���I�t����
-	HOT�{�^���̗L���̓I�t
-	NEW�{�^���̗L���̓I�t
-	RISING�{�^���̗L���̓I�t
-	CONTROVERSIAL�{�^���̗L���̓I�t
-	TOP�{�^���̗L���̓I�t
-	�����{�^���̗L���̓I�t
+●ボタンオフ処理
+	HOTボタンの有効はオフ
+	NEWボタンの有効はオフ
+	RISINGボタンの有効はオフ
+	CONTROVERSIALボタンの有効はオフ
+	TOPボタンの有効はオフ
+//	検索ボタンの有効はオフ
 
-��API�擾����(�Ώە������)
-	API�^�C�}�[���J�n
-	�{�^���I�t����
-	�ʒm�̃e�L�X�g�́uhttp://www.reddit.com/r/{�^�u�̃e�L�X�g}/{�Ώە�����}/.json?limit=100 �̎擾���v
-	0�b�҂�
-	JSON���uhttp://www.reddit.com/r/{�^�u�̃e�L�X�g}/{�Ώە�����}/.json?limit=100�v��HTTP�f�[�^�擾
-	raw��JSON��JSON�f�R�[�h
-	�u{�^�u�̃e�L�X�g}URLLIST��raw��^�u�̃e�L�X�g�Ń��X�g�����v���i�f�V�R����
+●API取得処理(対象文字列で)
+	APIタイマーを開始
+	ボタンオフ処理
+	通知のテキストは「http://www.reddit.com/r/{板タブのテキスト}/{対象文字列}/.json?limit=100 の取得中」
+	0秒待つ
+	JSON＝「http://www.reddit.com/r/{板タブのテキスト}/{対象文字列}/.json?limit=100」をHTTPデータ取得
+	raw＝JSONをJSONデコード
+	「{板タブのテキスト}URLLIST＝rawを板タブのテキストでリスト処理」をナデシコする
 
-��URL����
-	�uct���w{�^�u�̃e�L�X�g}�X���^�C�ꗗ�̍s�x�v���i�f�V�R����
-	CLICK���u�v
-	�uCLICK��{ct}-1�v���i�f�V�R����
-	UL���u�v
-	�uUL��{�^�u�̃e�L�X�g}URLLIST��{CLICK}�v���i�f�V�R����
-	����UL����Ȃ�A������
-	�u{�u���p�X} http://www.reddit.com{UL}�v���N������B
+●URL処理
+	「ct＝『{板タブのテキスト}スレタイ一覧の行』」をナデシコする
+	CLICK＝「」
+	「CLICK＝{ct}-1」をナデシコする
+	UL＝「」
+	「UL＝{板タブのテキスト}URLLIST￥{CLICK}」をナデシコする
+	もしULが空なら、抜ける
+	「{ブラパス} http://www.reddit.com{UL}」を起動する。
 
-�����X�g�����i�Ώە������,ITA�Łj
-	tmp���u�v
-	tmp�X���^�C���u�v
-	tmp�X���^�C�y0,0�z���w�ԍ�,���X,��,�t���A,�X���^�C�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�x
-	�p�^�[�����u\Anum_comments=�v
-	�Ώە�����𔽕�
-		�Ώۂ��p�^�[���Ő��K�\���}�b�`
-		�����A���ꂪ��łȂ���΁A
-			�Ώۂ̃p�^�[�����u�v�֐��K�\���u������
-			�����tmp�Ɉ�s�ǉ�
-	tmp�����s�ŋ�؂���tmp�ɑ��
-	tmp�𔽕�
-		tmp�X���^�C�y��,0�z����
-		tmp�X���^�C�y��,1�z���Ώ�
-	tmp���u�v
-	�p�^�[�����u\Ascore=�v
-	�Ώە�����𔽕�
-		�Ώۂ��p�^�[���Ő��K�\���}�b�`
-		�����A���ꂪ��łȂ���΁A
-			�Ώۂ̃p�^�[�����u�v�֐��K�\���u������
-			�����tmp�Ɉ�s�ǉ�
-	tmp�����s�ŋ�؂���tmp�ɑ��
-	tmp�𔽕�
-		tmp�X���^�C�y��,2�z���Ώ�
-	tmp���u�v	
-	�p�^�[�����u\Alink_flair_text=�v
-	�Ώە�����𔽕�
-		�Ώۂ��p�^�[���Ő��K�\���}�b�`
-		�����A���ꂪ��łȂ���΁A
-			�Ώۂ̃p�^�[�����u�v�֐��K�\���u������
-			�����tmp�Ɉ�s�ǉ�
-	tmp�����s�ŋ�؂���tmp�ɑ��
-	tmp�𔽕�
-		tmp�X���^�C�y��,3�z���Ώ�
-	tmp���u�v	
-	�p�^�[�����u\Adata=title=�v
-	�Ώە�����𔽕�
-		�Ώۂ��p�^�[���Ő��K�\���}�b�`
-		�����A���ꂪ��łȂ���΁A
-			�Ώۂ̃p�^�[�����u�v�֐��K�\���u������
-			�����tmp�Ɉ�s�ǉ�
-	tmp�����s�ŋ�؂���tmp�ɑ��
-	tmp�𔽕�
-		tmp�X���^�C�y��,4�z���Ώ�
-	tmp���u�v
-	ulist���u�v
-	�p�^�[�����u\Apermalink=�v
-	�Ώە�����𔽕�
-		�Ώۂ��p�^�[���Ő��K�\���}�b�`
-		�����A���ꂪ��łȂ���΁A
-			�Ώۂ̃p�^�[�����u�v�֐��K�\���u������
-			�����ulist�Ɉ�s�ǉ�
-	ulist�����s�ŋ�؂���ulist�ɑ��
+●ソースURL処理
+	「ct＝『{板タブのテキスト}スレタイ一覧の行』」をナデシコする
+	CLICK＝「」
+	「CLICK＝{ct}-1」をナデシコする
+	UL＝「」
+	「UL＝{板タブのテキスト}ソースリスト￥{CLICK}」をナデシコする
+	もしULが空なら、抜ける
+	「{ブラパス} {UL}」を起動する。
+	
+●URLコピー処理
+	「ct＝『{板タブのテキスト}スレタイ一覧の行』」をナデシコする
+	CLICK＝「」
+	「CLICK＝{ct}-1」をナデシコする
+	UL＝「」
+	「UL＝{板タブのテキスト}URLLIST￥{CLICK}」をナデシコする
+	もしULが空なら、抜ける
+	クリップボードは「http://www.reddit.com{UL}」
 
-	tmp�X���^�C�y0,0�z���w�ԍ�,���X,��,�t���A,�X���^�C�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�x
-	�u{ITA}�X���^�C�ꗗ�̃A�C�e����tmp�X���^�C�v���i�f�V�R����
-	�^�u�̕���(��͂̕�+1000)
-	�u{ITA}�X���^�C�ꗗ�̃Z���T�C�Y�������߁v���i�f�V�R����
-	�^�u�̕���(��͂̕�-20)
-	��͍ĕ`��
-	�ʒm�̃e�L�X�g�́u�����v
-	ulist�Ŗ߂�
+●URLスレタイコピー処理
+	「tmpスレタイ＝{板タブのテキスト}スレタイ一覧のアイテム」をナデシコする
+	「ct＝『{板タブのテキスト}スレタイ一覧の行』」をナデシコする
+	CLICK＝「」
+	「CLICK＝{ct}-1」をナデシコする
+	UL＝「」
+	「UL＝{板タブのテキスト}URLLIST￥{CLICK}」をナデシコする
+	もしULが空なら、抜ける
+	スレタイ＝「」
+	「スレタイ＝tmpスレタイ【{ct},4】」をナデシコする
+	「クリップボードは『http://www.reddit.com{UL}
+{スレタイ}』」をナデシコする
 
-���X���^�C�ꗗ��������(�Ώە������,ITA��)
-	tmp���u�v
-	tmp�X���^�C���w�ԍ�,���X,��,�t���A,�X���^�C�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�x
-	result�X���^�C���w�ԍ�,���X,��,�t���A,�X���^�C�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@
-�x
-	�utmpurl��{ITA}URLLIST�v���i�f�V�R����
-	ulist���u�v
-	�utmp�X���^�C��{ITA}�X���^�C�ꗗ�̃A�C�e���v���i�f�V�R����
-	tmp�X���^�C�𔽕�
-		�����񐔂�1�Ȃ��
-			������
-		�Ⴆ�΁A
-			�ΏۂőΏە�����𕶎�����
-			�����A���ꂪ0�łȂ���΁A
-				�Ώۂ�result�X���^�C�Ɉ�s�ǉ�
-				tmpurl��(��-2)��ulist�Ɉ�s�ǉ�
-	�����X���^�C�ꗗ�̃A�C�e����result�X���^�C
-	�^�u�̕���(��͂̕�+1000)
-	�u{ITA}�X���^�C�ꗗ�̃Z���T�C�Y�������߁v���i�f�V�R����
-	�^�u�̕���(��͂̕�-20)
-	��͍ĕ`��
-	�ʒm�̃e�L�X�g�́u�������ʁF{ulist�̍s��}�v
-	ulist�Ŗ߂�
+●リスト処理（対象文字列を,ITAで）
+	tmp＝「」
+	tmpスレタイ＝「」
+	tmpスレタイ【0,0】＝『番号,レス,↑,フレア,スレタイ　　　　　　　　　　　　　　　　　　　　　　　　　　』
+	パターン＝「\Anum_comments=」
+	対象文字列を反復
+		対象をパターンで正規表現マッチ
+		もし、それが空でなければ、
+			対象のパターンを「」へ正規表現置き換え
+			それをtmpに一行追加
+	tmpを改行で区切ってtmpに代入
+	tmpを反復
+		tmpスレタイ【回数,0】＝回数
+		tmpスレタイ【回数,1】＝対象
+	tmp＝「」
+	パターン＝「\Ascore=」
+	対象文字列を反復
+		対象をパターンで正規表現マッチ
+		もし、それが空でなければ、
+			対象のパターンを「」へ正規表現置き換え
+			それをtmpに一行追加
+	tmpを改行で区切ってtmpに代入
+	tmpを反復
+		tmpスレタイ【回数,2】＝対象
+	tmp＝「」	
+	パターン＝「\Alink_flair_text=」
+	対象文字列を反復
+		対象をパターンで正規表現マッチ
+		もし、それが空でなければ、
+			対象のパターンを「」へ正規表現置き換え
+			それをtmpに一行追加
+	tmpを改行で区切ってtmpに代入
+	tmpを反復
+		tmpスレタイ【回数,3】＝対象
+	tmp＝「」	
+	パターン＝「\Adata=title=」
+	対象文字列を反復
+		対象をパターンで正規表現マッチ
+		もし、それが空でなければ、
+			対象のパターンを「」へ正規表現置き換え
+			それをtmpに一行追加
+	tmpを改行で区切ってtmpに代入
+	tmpを反復
+		tmpスレタイ【回数,4】＝対象
+	tmp＝「」
+	ulist＝「」
+	パターン＝「\Apermalink=」
+	対象文字列を反復
+		対象をパターンで正規表現マッチ
+		もし、それが空でなければ、
+			対象のパターンを「」へ正規表現置き換え
+			それをulistに一行追加
+	ulistを改行で区切ってulistに代入
+	tmp＝「」
+	slist＝「」
+	パターン＝「\Asubreddit=」
+	パターン２＝「\Aurl=」
+	対象文字列を反復
+		対象をパターンで正規表現マッチ
+		もし、それが空でなければ、
+			対象文字列￥回数のパターン２を「」へ正規表現置き換え
+			それをslistに一行追加
+	slistを改行で区切ってslistに代入
+	「{ITA}ソースリストはslist」をナデシコする
+	tmpスレタイ【0,0】＝『番号,レス,↑,フレア,スレタイ　　　　　　　　　　　　　　　　　　　　　　　　　　』
+	「{ITA}スレタイ一覧のアイテムはtmpスレタイ」をナデシコする
+	板タブの幅は(母艦の幅+1000)
+	「{ITA}スレタイ一覧のセルサイズ自動調節」をナデシコする
+	板タブの幅は(母艦の幅-20)
+	母艦再描画
+	通知のテキストは「完了」
+	ulistで戻る
+
+●スレタイ一覧検索処理(対象文字列を,ITAで)
+	tmp＝「」
+	tmpスレタイ＝『番号,レス,↑,フレア,スレタイ　　　　　　　　　　　　　　　　　　　　　　　　　　』
+	resultスレタイ＝『番号,レス,↑,フレア,スレタイ　　　　　　　　　　　　　　　　　　　　　　　　　　
+』
+	「tmpurl＝{ITA}URLLIST」をナデシコする
+	ulist＝「」
+	「tmpスレタイ＝{ITA}スレタイ一覧のアイテム」をナデシコする
+	tmpスレタイを反復
+		もし回数が1ならば
+			続ける
+		違えば、
+			対象で対象文字列を文字検索
+			もし、それが0でなければ、
+				対象をresultスレタイに一行追加
+				tmpurl￥(回数-2)をulistに一行追加
+	検索スレタイ一覧のアイテムはresultスレタイ
+	板タブの幅は(母艦の幅+1000)
+	「{ITA}スレタイ一覧のセルサイズ自動調節」をナデシコする
+	板タブの幅は(母艦の幅-20)
+	母艦再描画
+	通知のテキストは「検索結果：{ulistの行数}」
+	ulistで戻る
