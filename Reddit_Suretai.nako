@@ -1,4 +1,4 @@
-Ver＝「v1.31」
+Ver＝「v1.32」
 #####メインフォーム設定
 ウィンドウ背景色で画面クリア
 母艦のタイトルは「意識低めのスレタイ一覧ツール for Reddit」
@@ -247,6 +247,8 @@ TOPボタンをクリックした時は
 文字書体は「Meiryo UI」
 文字サイズは9
 検索用フォームのタイトルは「検索」
+検索用フォームの閉じた時は
+	ボタンオン処理
 
 検索エディタとはエディタ
 検索エディタについて
@@ -357,9 +359,12 @@ reddit
 	ボタンオフ処理
 	通知のテキストは「http://www.reddit.com/r/{板タブのテキスト}/{対象文字列}/.json?limit=100 の取得中」
 	0秒待つ
-	JSON＝「http://www.reddit.com/r/{板タブのテキスト}/{対象文字列}/.json?limit=100」をHTTPデータ取得
-	raw＝JSONをJSONデコード
-	「{板タブのテキスト}URLLIST＝rawを板タブのテキストでリスト処理」をナデシコする
+	エラー監視
+		JSON＝「http://www.reddit.com/r/{板タブのテキスト}/{対象文字列}/.json?limit=100」をHTTPデータ取得
+		raw＝JSONをJSONデコード
+		「{板タブのテキスト}URLLIST＝rawを板タブのテキストでリスト処理」をナデシコする
+	エラーならば
+		通知のテキストは「サーバーに接続できませんでした。」
 
 ●URL処理
 	「ct＝『{板タブのテキスト}スレタイ一覧の行』」をナデシコする
@@ -500,7 +505,8 @@ reddit
 	ulistで戻る
 
 ●Google検索処理(対象文字列をITAで)
-	検索URI＝「site:www.reddit.com/r/{ITA}/ intitle:{対象文字列}」をURLエンコード
+	検索URI＝「site:www.reddit.com/r/{ITA}/ intitle:{対象文字列}」を「sjis」から「utf8」へ文字コード変換
+	検索URI＝検索URIをURLエンコード
 	「{ブラパス} https://www.google.co.jp/search?&q={検索URI}」を起動する。
 	ボタンオン処理
 
@@ -511,11 +517,16 @@ reddit
 	検索ワード＝検索ワードをURLエンコード
 	通知のテキストは「http://www.reddit.com/r/{板}/search.json?q={検索ワード}&restrict_sr=on&sort=relevance&t=all&limit=100 の取得中」
 	0秒待つ
-	JSON＝「http://www.reddit.com/r/{板}/search.json?q={検索ワード}&restrict_sr=on&sort=relevance&t=all&limit=100」をHTTPデータ取得
-	raw＝JSONをJSONデコード
+	エラー監視
+		JSON＝「http://www.reddit.com/r/{板}/search.json?q={検索ワード}&restrict_sr=on&sort=relevance&t=all&limit=100」をHTTPデータ取得
+		raw＝JSONをJSONデコード
+	エラーならば
+		通知のテキストは「サーバーに接続できませんでした。」
+		raw＝「」
 	板タブの表示タブは(板数)
 	検索URLLIST＝rawを「検索」でリスト処理
 	通知のテキストは「検索結果：{検索URLLISTの行数}」
+	ボタンオフ処理
 
 #######導入試験中の関数群
 ●GoogleAPI検索処理(対象文字列を,ITAで)
@@ -531,7 +542,12 @@ reddit
 	検索URI＝検索URIの「+」を「%20」に置換
 	//	JSON＝「https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q={検索URI}&userip={GIP}」からHTTPデータ取得
 	通知のテキストは「https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q={検索URI}&rsz=8 の取得中」
-	JSON＝「https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q={検索URI}&rsz=8」からHTTPデータ取得
+	エラー監視
+		JSON＝「https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q={検索URI}&rsz=8」からHTTPデータ取得
+	エラーならば
+		通知のテキストは「サーバーに接続できませんでした。」
+		ulist＝「」
+		ulistで戻る
 	0秒待つ
 	raw＝JSONをJSONデコード
 	パターン＝「\AtitleNoFormatting=」
@@ -555,6 +571,7 @@ reddit
 	母艦再描画
 	通知のテキストは「検索結果：{ulistの行数}(試験中につき8件までしか取得しません)」
 	板タブの表示タブは(板数)
+	ボタンオフ処理
 	ulistで戻る
 
 ●GIP取得処理
