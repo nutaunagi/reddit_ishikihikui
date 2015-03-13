@@ -1,4 +1,4 @@
-Ver＝「v1.40」
+Ver＝「v1.41」
 #####メインフォーム設定
 ウィンドウ背景色で画面クリア
 母艦のタイトルは「意識低めのスレタイ一覧ツール for Reddit」
@@ -332,7 +332,7 @@ reddit
 		検索用フォームの可視はオフ
 		抜ける
 	違えば、もし、検索ラジオの値が2ならば
-		もし、板タブの表示タブが(板数)なら
+		もし、板タブの表示タブが(板数+1)なら
 			検索URLLIST＝検索エディタのテキストを「板無し」でGoogleAPI検索処理
 		違えば
 			検索URLLIST＝検索エディタのテキストを板タブのテキストでGoogleAPI検索処理
@@ -549,7 +549,11 @@ reddit
 	ulistで戻る
 
 ●Google検索処理(対象文字列をITAで)
-	検索URI＝「site:www.reddit.com/r/{ITA}/ intitle:{対象文字列}」を「sjis」から「utf8」へ文字コード変換
+	もしITAが「全部」なら
+		対象板＝全板
+	違えば、
+		対象板＝ITA
+	検索URI＝「site:www.reddit.com/r/{対象板}/ intitle:{対象文字列}」を「sjis」から「utf8」へ文字コード変換
 	検索URI＝検索URIをURLエンコード
 	「{ブラパス} https://www.google.co.jp/search?&q={検索URI}」を起動する。
 	ボタンオン処理
@@ -557,12 +561,18 @@ reddit
 ●API検索処理(検索ワードを,板で)
 	APIタイマーを開始
 	ボタンオフ処理
+	もし板が「全部」なら
+		対象板＝全板
+		対象板＝対象板を「sjis」から「utf8」へ文字コード変換
+		対象板＝対象板をURLエンコード
+	違えば、
+		対象板＝板
 	検索ワード＝検索ワードを「sjis」から「utf8」へ文字コード変換
 	検索ワード＝検索ワードをURLエンコード
-	通知のテキストは「http://www.reddit.com/r/{板}/search.json?q={検索ワード}&restrict_sr=on&sort=relevance&t=all&limit=100 の取得中」
+	通知のテキストは「http://www.reddit.com/r/{対象板}/search.json?q={検索ワード}&restrict_sr=on&sort=relevance&t=all&limit=100 の取得中」
 	0秒待つ
 	エラー監視
-		JSON＝「http://www.reddit.com/r/{板}/search.json?q={検索ワード}&restrict_sr=on&sort=relevance&t=all&limit=100」をHTTPデータ取得
+		JSON＝「http://www.reddit.com/r/{対象板}/search.json?q={検索ワード}&restrict_sr=on&sort=relevance&t=all&limit=100」をHTTPデータ取得
 		raw＝JSONをJSONデコード
 	エラーならば
 		通知のテキストは「サーバーに接続できませんでした。」
@@ -577,10 +587,16 @@ reddit
 	tmpスレタイ＝「」	
 	tmpスレタイ【0,0】＝『番号,スレタイ　　　　　　　　　　　　　　　　　　　　　　　　　　』
 	検索スレタイ一覧のアイテムはtmpスレタイ
-	もしITAが「板無し」なら
+	もしITAが「全部」なら
+		対象板＝全板
+		対象板＝対象板を「sjis」から「utf8」へ文字コード変換
+		対象板＝対象板をURLエンコード
+	違えば、
+		対象板＝ITA
+	もし対象板が「板無し」なら
 		検索URI＝「site:www.reddit.com/r/ intitle:{対象文字列}」
 	違えば
-		検索URI＝「site:www.reddit.com/r/{ITA}/ intitle:{対象文字列}」
+		検索URI＝「site:www.reddit.com/r/{対象板}/ intitle:{対象文字列}」
 	検索URI＝検索URIを「sjis」から「utf8」へ文字コード変換
 	検索URI＝検索URIをURLエンコード
 	検索URI＝検索URIの「+」を「%20」に置換
